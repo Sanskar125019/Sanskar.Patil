@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sanskar Suhas Patil – Digital Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:#f7f5f0;--surface:#ffffff;--ink:#1c1c1a;--muted:#6b6860;
+      --accent:#c0392b;--accent2:#e67e22;--border:#e0ddd6;
+      --card:#ffffff;--nav-bg:rgba(247,245,240,0.95);
+    }
+    [data-theme="dark"] {
+      --bg:#141412;--surface:#1e1e1b;--ink:#f0ede6;--muted:#9a9690;
+      --accent:#e74c3c;--accent2:#f39c12;--border:#2e2e2a;
+      --card:#252520;--nav-bg:rgba(20,20,18,0.95);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);transition:background .3s,color .3s;}
+ 
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;transition:background .3s;}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--accent);}
+    .nav-links{display:flex;gap:1.6rem;list-style:none;}
+    .nav-links a{font-size:.82rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s;}
+    .nav-links a:hover{color:var(--accent);}
+    .theme-toggle{background:none;border:1px solid var(--border);border-radius:20px;padding:4px 12px;cursor:pointer;font-size:.8rem;color:var(--muted);transition:all .2s;}
+    .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+ 
+    section{padding:80px 0;}
+    .container{max-width:1000px;margin:0 auto;padding:0 2rem;}
+    .section-label{font-size:.7rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;line-height:1.1;margin-bottom:2.5rem;}
+ 
+    #home{min-height:100vh;display:flex;align-items:center;padding-top:60px;}
+    .home-grid{display:grid;grid-template-columns:1fr 320px;gap:4rem;align-items:center;}
+    .home-tag{display:inline-block;background:var(--accent);color:#fff;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;padding:4px 14px;border-radius:2px;margin-bottom:1rem;}
+    .home-name{font-family:'Cormorant Garamond',serif;font-size:3.6rem;font-weight:700;line-height:1.05;margin-bottom:.5rem;}
+    .home-role{font-size:1rem;color:var(--muted);margin-bottom:1.5rem;font-weight:300;}
+    .home-intro{font-size:.93rem;line-height:1.8;color:var(--muted);max-width:460px;margin-bottom:2rem;}
+    .btn{display:inline-block;padding:10px 28px;background:var(--accent);color:#fff;font-size:.82rem;font-weight:500;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:opacity .2s;}
+    .btn:hover{opacity:.85;}
+    .btn-outline{background:none;border:1px solid var(--accent);color:var(--accent);margin-left:.8rem;}
+    .photo-box{width:280px;height:340px;background:var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;}
+    .photo-box img{width:100%;height:100%;object-fit:cover;}
+    .photo-placeholder{text-align:center;color:var(--muted);font-size:.78rem;padding:1rem;}
+    .photo-placeholder span{display:block;font-size:2.5rem;margin-bottom:.5rem;}
+    .photo-frame{position:absolute;inset:-6px;border:1px solid var(--accent);border-radius:4px;pointer-events:none;transform:translate(10px,10px);}
+ 
+    #about{background:var(--surface);}
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+    .about-intro{grid-column:1/-1;font-size:.93rem;line-height:1.9;color:var(--muted);margin-bottom:.5rem;}
+    .about-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.4rem;}
+    .about-card h3{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--accent);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);}
+    .about-card ul{list-style:none;}
+    .about-card ul li{font-size:.83rem;color:var(--muted);padding:.3rem 0;border-bottom:1px dotted var(--border);display:flex;gap:.5rem;align-items:baseline;}
+    .about-card ul li::before{content:'→';color:var(--accent);flex-shrink:0;}
+ 
+    #achievements{background:var(--bg);}
+    .cert-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem;}
+    .cert-card{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:1.4rem;transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;}
+    .cert-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);}
+    .cert-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+    .cert-issuer{font-size:.68rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:.4rem;}
+    .cert-name{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:700;margin-bottom:.4rem;color:var(--ink);}
+    .cert-date{font-size:.75rem;color:var(--muted);margin-bottom:.7rem;}
+    .cert-desc{font-size:.8rem;color:var(--muted);line-height:1.6;}
+    .cert-link{display:inline-block;margin-top:.8rem;font-size:.75rem;color:var(--accent);text-decoration:none;font-weight:500;}
+    .cert-link:hover{text-decoration:underline;}
+    .img-placeholder{background:var(--bg);border:1px dashed var(--border);border-radius:3px;padding:.5rem;margin-top:.8rem;font-size:.73rem;color:var(--muted);text-align:center;}
+ 
+    #projects{background:var(--surface);}
+    .proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem;}
+    .proj-card{background:var(--card);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+    .proj-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.09);}
+    .proj-img-placeholder{width:100%;height:155px;background:linear-gradient(135deg,var(--border),var(--bg));display:flex;align-items:center;justify-content:center;font-size:2.2rem;}
+    .proj-body{padding:1.2rem;}
+    .proj-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem;}
+    .proj-desc{font-size:.81rem;color:var(--muted);line-height:1.6;margin-bottom:.8rem;}
+    .tag{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:2px;font-size:.69rem;padding:2px 8px;color:var(--muted);margin:.2rem;}
+ 
+    #gallery{background:var(--bg);}
+    .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.8rem;}
+    .gallery-item{aspect-ratio:4/3;background:var(--border);border-radius:3px;overflow:hidden;cursor:pointer;transition:transform .2s;display:flex;align-items:center;justify-content:center;font-size:.73rem;color:var(--muted);text-align:center;padding:.5rem;border:1px solid var(--border);}
+    .gallery-item:hover{transform:scale(1.03);}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;}
+    .lightbox{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;}
+    .lightbox.active{display:flex;}
+    .lightbox img{max-width:90vw;max-height:90vh;border-radius:4px;}
+    .lightbox-close{position:absolute;top:1.5rem;right:2rem;font-size:2rem;color:#fff;cursor:pointer;}
+ 
+    #contact{background:var(--surface);}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+    .contact-item{display:flex;gap:1rem;align-items:flex-start;padding:1.2rem;background:var(--card);border:1px solid var(--border);border-radius:4px;}
+    .contact-icon{font-size:1.3rem;flex-shrink:0;}
+    .contact-label{font-size:.7rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);}
+    .contact-value{font-size:.9rem;font-weight:500;color:var(--ink);}
+    .contact-value a{color:var(--accent);text-decoration:none;}
+    .contact-value a:hover{text-decoration:underline;}
+ 
+    footer{background:var(--ink);color:rgba(255,255,255,.5);text-align:center;padding:1.5rem;font-size:.78rem;}
+    footer span{color:var(--accent);}
+ 
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+    .fade-in.visible{opacity:1;transform:none;}
+ 
+    @media(max-width:700px){
+      .home-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+      .about-intro{grid-column:auto;}
+      .photo-box{width:220px;height:270px;margin:0 auto;}
+      .home-name{font-size:2.6rem;}
+      .nav-links{display:none;}
+    }
+  </style>
+</head>
+<body>
+ 
+<nav>
+  <div class="nav-logo">S. S. Patil</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+</nav>
+ 
+<!-- HOME -->
+<section id="home">
+  <div class="container">
+    <div class="home-grid">
+      <div class="fade-in">
+        <span class="home-tag">Student Portfolio</span>
+        <h1 class="home-name">Sanskar<br/>Suhas Patil</h1>
+        <p class="home-role">MIT Vishwaprayag University · School of Computing</p>
+        <p class="home-intro">
+          Passionate learner exploring programming, chemistry, and professional development.
+          Certified through Coursera and committed to building skills that create real-world impact.
+        </p>
+        <a href="#contact" class="btn">Get in Touch</a>
+        <a href="#achievements" class="btn btn-outline">View Certificates</a>
+      </div>
+      <div class="fade-in" style="display:flex;justify-content:center;">
+        <div style="position:relative;">
+          <div class="photo-box">
+            <!--
+              REPLACE THIS with your actual photo:
+              <img src="images/photo.jpg" alt="Sanskar Suhas Patil"/>
+            -->
+            <div class="photo-placeholder">
+              <span>📷</span>
+              Your Photo Here<br/>
+              <small>Add: images/photo.jpg</small>
+            </div>
+          </div>
+          <div class="photo-frame"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">Who I Am</div>
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <p class="about-intro fade-in">
+        I am Sanskar Suhas Patil, a motivated student at MIT Vishwaprayag University, Solapur.
+        I have a keen interest in programming, chemistry, and professional communication.
+        I believe in continuous learning and have completed multiple Coursera certifications
+        to strengthen my academic and professional profile. I aspire to build technology
+        that is impactful and accessible to all.
+      </p>
+      <div class="about-card fade-in">
+        <h3>🎓 Education</h3>
+        <ul>
+          <li>MIT Vishwaprayag University, Solapur</li>
+          <li>School of Computing</li>
+          <li>Add your degree / branch here</li>
+          <li>Add 12th school / year / percentage</li>
+          <li>Add 10th school / year / percentage</li>
+        </ul>
+      </div>
+      <div class="about-card fade-in">
+        <h3>💡 Interests</h3>
+        <ul>
+          <li>Programming & Software Development</li>
+          <li>MATLAB & Scientific Computing</li>
+          <li>Chemistry & Applied Sciences</li>
+          <li>Professional Communication</li>
+          <li>Design Thinking & Innovation</li>
+        </ul>
+      </div>
+      <div class="about-card fade-in">
+        <h3>🎯 Goals</h3>
+        <ul>
+          <li>Build impactful software products</li>
+          <li>Develop strong professional skills</li>
+          <li>Contribute to AI &amp; technology projects</li>
+          <li>Secure a meaningful career in tech</li>
+          <li>Add your personal goals here</li>
+        </ul>
+      </div>
+      <div class="about-card fade-in">
+        <h3>💪 Strengths</h3>
+        <ul>
+          <li>Quick &amp; self-directed learner</li>
+          <li>Strong email &amp; professional etiquette</li>
+          <li>Problem-solving mindset</li>
+          <li>Team collaboration &amp; communication</li>
+          <li>Add your strengths here</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-label">Certifications &amp; Awards</div>
+    <h2 class="section-title">Achievements</h2>
+    <div class="cert-grid">
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Coursera · MIT Vishwaprayag University</div>
+        <div class="cert-name">Email Etiquette</div>
+        <div class="cert-date">Dec 14, 2025</div>
+        <div class="cert-desc">Professional email communication, etiquette, and best practices in workplace correspondence authorized by MIT Vishwaprayag University.</div>
+        <!-- Add cert image: <img src="images/cert_email_etiquette.jpg" style="width:100%;border-radius:3px;margin-top:.8rem;border:1px solid var(--border);"> -->
+        <div class="img-placeholder">📜 Add: images/cert_email_etiquette.jpg</div>
+        <a class="cert-link" href="https://coursera.org/verify/270LOGQ45VAC" target="_blank">✓ Verify Certificate →</a>
+      </div>
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Coursera · MIT Vishwaprayag University</div>
+        <div class="cert-name">Professional Etiquette Skills</div>
+        <div class="cert-date">Dec 14, 2025</div>
+        <div class="cert-desc">In-depth knowledge of workplace behaviour, interpersonal communication, and corporate culture standards for professional environments.</div>
+        <div class="img-placeholder">📜 Add: images/cert_professional_etiquette.jpg</div>
+        <a class="cert-link" href="https://coursera.org/verify/X2JHAADKT7BW" target="_blank">✓ Verify Certificate →</a>
+      </div>
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Coursera · Vanderbilt University</div>
+        <div class="cert-name">Introduction to Programming with MATLAB</div>
+        <div class="cert-date">Dec 14, 2025</div>
+        <div class="cert-desc">Foundational programming concepts using MATLAB: loops, functions, data structures, and scientific computing authorized by Vanderbilt University.</div>
+        <div class="img-placeholder">📜 Add: images/cert_matlab.jpg</div>
+        <a class="cert-link" href="https://coursera.org/verify/XZYF7JMSBHQ3" target="_blank">✓ Verify Certificate →</a>
+      </div>
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Coursera · MIT Vishwaprayag University</div>
+        <div class="cert-name">Revisiting Chemistry: Preparatory Course for ACE-AS1201</div>
+        <div class="cert-date">Feb 9, 2026</div>
+        <div class="cert-desc">Core chemistry concepts for the ACE-AS1201 program at MIT Vishwaprayag University, School of Computing.</div>
+        <div class="img-placeholder">📜 Add: images/cert_chemistry.jpg</div>
+        <a class="cert-link" href="https://coursera.org/verify/SKE7WKOUWGO3" target="_blank">✓ Verify Certificate →</a>
+      </div>
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Cisco NetAcad</div>
+        <div class="cert-name">NetAcad Certificate</div>
+        <div class="cert-date">Add your date</div>
+        <div class="cert-desc">Add your Cisco NetAcad certificate name and a brief description of what you learned.</div>
+        <div class="img-placeholder">📜 Add: images/cert_netacad.jpg</div>
+      </div>
+ 
+      <div class="cert-card fade-in">
+        <div class="cert-issuer">Yuva AI</div>
+        <div class="cert-name">Yuva AI Certificate</div>
+        <div class="cert-date">Add your date</div>
+        <div class="cert-desc">Add your Yuva AI certificate name and a brief description of the course and skills gained.</div>
+        <div class="img-placeholder">📜 Add: images/cert_yuvaai.jpg</div>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">What I've Built</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="proj-grid">
+ 
+      <div class="proj-card fade-in">
+        <!-- Replace with: <img src="images/proj_ai4a.jpg" style="width:100%;height:155px;object-fit:cover;"> -->
+        <div class="proj-img-placeholder">🤖</div>
+        <div class="proj-body">
+          <div class="proj-title">AI for All (Ai4A) Project</div>
+          <p class="proj-desc">A project focused on making artificial intelligence accessible. Add your description — what problem it solves, tools used, and your role.</p>
+          <div><span class="tag">AI</span><span class="tag">Machine Learning</span><span class="tag">Add Tech</span></div>
+        </div>
+      </div>
+ 
+      <div class="proj-card fade-in">
+        <div class="proj-img-placeholder">💡</div>
+        <div class="proj-body">
+          <div class="proj-title">Design Thinking Project</div>
+          <p class="proj-desc">Applied design thinking methodology to identify a real-world problem, ideate solutions, prototype, and test. Add your specific project details here.</p>
+          <div><span class="tag">Design Thinking</span><span class="tag">Prototyping</span><span class="tag">Innovation</span></div>
+        </div>
+      </div>
+ 
+      <div class="proj-card fade-in">
+        <div class="proj-img-placeholder">⚗️</div>
+        <div class="proj-body">
+          <div class="proj-title">ACE Project</div>
+          <p class="proj-desc">Academic project completed as part of the ACE curriculum at MIT Vishwaprayag University. Add your project title, description, and outcomes.</p>
+          <div><span class="tag">ACE</span><span class="tag">Add Technology</span></div>
+        </div>
+      </div>
+ 
+      <div class="proj-card fade-in">
+        <div class="proj-img-placeholder">➕</div>
+        <div class="proj-body">
+          <div class="proj-title">Add Your Project</div>
+          <p class="proj-desc">Add any other personal or academic project here. Replace the emoji above with a screenshot: images/proj_name.jpg</p>
+          <div><span class="tag">Your Tech</span></div>
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+</section>
+ 
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Photos &amp; Certificates</div>
+    <h2 class="section-title">Gallery</h2>
+    <div class="gallery-grid">
+      <!--
+        To add real images use this pattern:
+        <div class="gallery-item" onclick="openLightbox('images/cert_email.jpg')">
+          <img src="images/cert_email.jpg" alt="Email Etiquette"/>
+        </div>
+      -->
+      <div class="gallery-item">📜<br/><small>Email Etiquette Cert<br/>images/cert_email_etiquette.jpg</small></div>
+      <div class="gallery-item">📜<br/><small>Professional Etiquette Cert<br/>images/cert_professional_etiquette.jpg</small></div>
+      <div class="gallery-item">📜<br/><small>MATLAB Cert<br/>images/cert_matlab.jpg</small></div>
+      <div class="gallery-item">📜<br/><small>Chemistry Cert<br/>images/cert_chemistry.jpg</small></div>
+      <div class="gallery-item">📜<br/><small>NetAcad Cert<br/>images/cert_netacad.jpg</small></div>
+      <div class="gallery-item">📜<br/><small>Yuva AI Cert<br/>images/cert_yuvaai.jpg</small></div>
+      <div class="gallery-item">📸<br/><small>Your Photo<br/>images/photo1.jpg</small></div>
+      <div class="gallery-item">📸<br/><small>Event Photo<br/>images/event.jpg</small></div>
+    </div>
+  </div>
+</section>
+ 
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">✕</span>
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+ 
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Let's Connect</div>
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+      <div class="contact-item fade-in">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="mailto:youremail@example.com">youremail@example.com</a></div>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value">+91 XXXXX XXXXX</div>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">💼</div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-value"><a href="https://linkedin.com/in/yourprofile" target="_blank">linkedin.com/in/yourprofile</a></div>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">🐙</div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value"><a href="https://github.com/yourgithub" target="_blank">github.com/yourgithub</a></div>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">🏫</div>
+        <div>
+          <div class="contact-label">University</div>
+          <div class="contact-value">MIT Vishwaprayag University, Solapur</div>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Maharashtra, India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <p>Designed &amp; built by <span>Sanskar Suhas Patil</span> · MIT Vishwaprayag University · 2026</p>
+</footer>
+ 
+<script>
+  function toggleTheme(){
+    const h=document.documentElement,b=document.querySelector('.theme-toggle');
+    if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Dark';}
+    else{h.dataset.theme='dark';b.textContent='☀️ Light';}
+  }
+  const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
+  document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src=src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox(){document.getElementById('lightbox').classList.remove('active');}
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+</script>
+</body>
+</html>
